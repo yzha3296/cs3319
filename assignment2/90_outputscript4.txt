@@ -1,0 +1,363 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+CREATE VIEW passenger_who_take_trip AS
+SELECT first_name, last_name, trip_name, visit_country, price
+FROM tripBooking
+    INNER JOIN passenger ON passenger.passenger_id = tripBooking.passenger_id
+    INNER JOIN busTrip ON tripBooking.trip_id = busTrip.trip_id
+--------------
+
+Query OK, 0 rows affected (0.04 sec)
+
+--------------
+SELECT * FROM passenger_who_take_trip
+--------------
+
++------------+-----------+----------------------------+---------------+---------+
+| first_name | last_name | trip_name                  | visit_country | price   |
++------------+-----------+----------------------------+---------------+---------+
+| Homer      | Simpson   | Castles of Germany         | Germany       |  500.00 |
+| Marge      | Simpson   | Castles of Germany         | Germany       |  500.00 |
+| Bart       | Simpson   | Castles of Germany         | Germany       |  200.00 |
+| Lisa       | Simpson   | Castles of Germany         | Germany       |  200.00 |
+| Maggie     | Simpson   | Castles of Germany         | Germany       |  200.00 |
+| Heidi      | Klum      | Castles of Germany         | Germany       |  600.99 |
+| Dwight     | Schrute   | Castles of Germany         | Germany       |  550.00 |
+| Dwight     | Schrute   | Beaches Galore             | Bermuda       |  600.00 |
+| Creed      | Bratton   | Beaches Galore             | Bermuda       |  600.00 |
+| Homer      | Simpson   | Arrivaderci Roma           | Italy         |  600.00 |
+| Marge      | Simpson   | Arrivaderci Roma           | Italy         |  600.00 |
+| Bart       | Simpson   | Arrivaderci Roma           | Italy         |  100.00 |
+| Lisa       | Simpson   | Arrivaderci Roma           | Italy         |  100.00 |
+| Maggie     | Simpson   | Arrivaderci Roma           | Italy         |  100.00 |
+| Homer      | Simpson   | Shetland and Orkney        | UK            |  300.00 |
+| Ned        | Flanders  | Shetland and Orkney        | UK            |  400.00 |
+| Michael    | Scott     | Shetland and Orkney        | UK            |  500.00 |
+| Ned        | Flanders  | Disney World and Sea World | USA           |  400.00 |
+| Todd       | Flanders  | Disney World and Sea World | USA           |  200.00 |
+| Bart       | Simpson   | Disney World and Sea World | USA           |  300.00 |
+| Lisa       | Simpson   | Disney World and Sea World | USA           |  300.00 |
+| John       | Reed      | Worst Tour                 | Canada        | 1000.99 |
++------------+-----------+----------------------------+---------------+---------+
+22 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM passenger_who_take_trip
+WHERE trip_name like '%Castles%'
+ORDER BY price
+--------------
+
++------------+-----------+--------------------+---------------+--------+
+| first_name | last_name | trip_name          | visit_country | price  |
++------------+-----------+--------------------+---------------+--------+
+| Bart       | Simpson   | Castles of Germany | Germany       | 200.00 |
+| Maggie     | Simpson   | Castles of Germany | Germany       | 200.00 |
+| Lisa       | Simpson   | Castles of Germany | Germany       | 200.00 |
+| Homer      | Simpson   | Castles of Germany | Germany       | 500.00 |
+| Marge      | Simpson   | Castles of Germany | Germany       | 500.00 |
+| Dwight     | Schrute   | Castles of Germany | Germany       | 550.00 |
+| Heidi      | Klum      | Castles of Germany | Germany       | 600.99 |
++------------+-----------+--------------------+---------------+--------+
+7 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM bus
+--------------
+
++----------------------+----------+
+| License_Plate_number | capacity |
++----------------------+----------+
+| CAND123              | 50       |
+| TAXI111              | 4        |
+| TAXI222              | 3        |
+| TAXI333              | 4        |
+| UWO1122              | 70       |
+| UWO3311              | 62       |
+| VAN1111              | 10       |
+| VAN2222              | 15       |
++----------------------+----------+
+8 rows in set (0.00 sec)
+
+--------------
+DELETE FROM bus
+WHERE License_Plate_number LIKE '%UWO%'
+--------------
+
+Query OK, 2 rows affected (0.01 sec)
+
+--------------
+SELECT * FROM bus
+--------------
+
++----------------------+----------+
+| License_Plate_number | capacity |
++----------------------+----------+
+| CAND123              | 50       |
+| TAXI111              | 4        |
+| TAXI222              | 3        |
+| TAXI333              | 4        |
+| VAN1111              | 10       |
+| VAN2222              | 15       |
++----------------------+----------+
+6 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM passport
+--------------
+
++--------------+-------------+------------+------------+--------------+
+| passport_num | citizenship | exp_date   | birth_date | passenger_id |
++--------------+-------------+------------+------------+--------------+
+| GE11         | Germany     | 2027-01-01 | 1970-07-12 |           66 |
+| US10         | USA         | 2025-01-01 | 1970-02-19 |           11 |
+| US12         | USA         | 2025-01-01 | 1972-08-12 |           22 |
+| US13         | USA         | 2025-01-01 | 2001-05-12 |           33 |
+| US14         | USA         | 2025-01-01 | 2004-03-19 |           34 |
+| US15         | USA         | 2025-01-01 | 2012-09-17 |           35 |
+| US22         | USA         | 2030-04-04 | 1950-06-11 |           44 |
+| US23         | USA         | 2018-03-03 | 1940-06-24 |           45 |
+| US88         | Canada      | 2030-02-13 | 1979-04-25 |           77 |
+| US89         | Germany     | 2022-02-02 | 1976-04-08 |           78 |
+| US90         | Italy       | 2020-02-28 | 1980-04-04 |           79 |
+| US91         | Germany     | 2030-01-01 | 1959-02-02 |           80 |
+| US99         | Canada      | 2030-01-01 | 1970-01-01 |           90 |
++--------------+-------------+------------+------------+--------------+
+13 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM passenger
+--------------
+
++--------------+------------+-----------+
+| passenger_id | first_name | last_name |
++--------------+------------+-----------+
+|           11 | Homer      | Simpson   |
+|           22 | Marge      | Simpson   |
+|           33 | Bart       | Simpson   |
+|           34 | Lisa       | Simpson   |
+|           35 | Maggie     | Simpson   |
+|           44 | Ned        | Flanders  |
+|           45 | Todd       | Flanders  |
+|           66 | Heidi      | Klum      |
+|           77 | Michael    | Scott     |
+|           78 | Dwight     | Schrute   |
+|           79 | Pam        | Beesly    |
+|           80 | Creed      | Bratton   |
+|           90 | John       | Reed      |
++--------------+------------+-----------+
+13 rows in set (0.00 sec)
+
+--------------
+DELETE FROM passport
+WHERE citizenship = "Canada"
+--------------
+
+Query OK, 2 rows affected (0.05 sec)
+
+--------------
+SELECT * FROM passport
+--------------
+
++--------------+-------------+------------+------------+--------------+
+| passport_num | citizenship | exp_date   | birth_date | passenger_id |
++--------------+-------------+------------+------------+--------------+
+| GE11         | Germany     | 2027-01-01 | 1970-07-12 |           66 |
+| US10         | USA         | 2025-01-01 | 1970-02-19 |           11 |
+| US12         | USA         | 2025-01-01 | 1972-08-12 |           22 |
+| US13         | USA         | 2025-01-01 | 2001-05-12 |           33 |
+| US14         | USA         | 2025-01-01 | 2004-03-19 |           34 |
+| US15         | USA         | 2025-01-01 | 2012-09-17 |           35 |
+| US22         | USA         | 2030-04-04 | 1950-06-11 |           44 |
+| US23         | USA         | 2018-03-03 | 1940-06-24 |           45 |
+| US89         | Germany     | 2022-02-02 | 1976-04-08 |           78 |
+| US90         | Italy       | 2020-02-28 | 1980-04-04 |           79 |
+| US91         | Germany     | 2030-01-01 | 1959-02-02 |           80 |
++--------------+-------------+------------+------------+--------------+
+11 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM passenger
+--------------
+
++--------------+------------+-----------+
+| passenger_id | first_name | last_name |
++--------------+------------+-----------+
+|           11 | Homer      | Simpson   |
+|           22 | Marge      | Simpson   |
+|           33 | Bart       | Simpson   |
+|           34 | Lisa       | Simpson   |
+|           35 | Maggie     | Simpson   |
+|           44 | Ned        | Flanders  |
+|           45 | Todd       | Flanders  |
+|           66 | Heidi      | Klum      |
+|           77 | Michael    | Scott     |
+|           78 | Dwight     | Schrute   |
+|           79 | Pam        | Beesly    |
+|           80 | Creed      | Bratton   |
+|           90 | John       | Reed      |
++--------------+------------+-----------+
+13 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM busTrip
+--------------
+
++---------+----------------------------+------------+------------+---------------+----------------------+
+| trip_id | trip_name                  | begin_date | end_date   | visit_country | License_Plate_number |
++---------+----------------------------+------------+------------+---------------+----------------------+
+|       1 | Castles of Germany         | 2022-01-01 | 2022-01-17 | Germany       | VAN1111              |
+|       2 | Tuscany Sunsets            | 2022-03-03 | 2022-03-14 | Italy         | TAXI222              |
+|       3 | California Wines           | 2022-05-05 | 2022-05-10 | USA           | VAN1111              |
+|       4 | Beaches Galore             | 2022-04-04 | 2022-04-14 | Bermuda       | TAXI222              |
+|       5 | Cottage Country            | 2022-06-01 | 2022-06-22 | Canada        | CAND123              |
+|       6 | Arrivaderci Roma           | 2022-07-05 | 2022-07-15 | Italy         | TAXI111              |
+|       7 | Shetland and Orkney        | 2022-09-09 | 2022-09-29 | UK            | TAXI111              |
+|       8 | Disney World and Sea World | 2022-06-10 | 2022-06-20 | USA           | VAN1111              |
+|       9 | Alpine                     | 2024-02-13 | 2024-02-28 | Germany       | VAN1111              |
+|      10 | Worst Tour                 | 2022-02-22 | 2022-03-01 | Canada        | TAXI111              |
++---------+----------------------------+------------+------------+---------------+----------------------+
+10 rows in set (0.00 sec)
+
+--------------
+DELETE FROM busTrip
+WHERE trip_name = "California Wines"
+--------------
+
+Query OK, 1 row affected (0.01 sec)
+
+--------------
+SELECT * FROM busTrip
+--------------
+
++---------+----------------------------+------------+------------+---------------+----------------------+
+| trip_id | trip_name                  | begin_date | end_date   | visit_country | License_Plate_number |
++---------+----------------------------+------------+------------+---------------+----------------------+
+|       1 | Castles of Germany         | 2022-01-01 | 2022-01-17 | Germany       | VAN1111              |
+|       2 | Tuscany Sunsets            | 2022-03-03 | 2022-03-14 | Italy         | TAXI222              |
+|       4 | Beaches Galore             | 2022-04-04 | 2022-04-14 | Bermuda       | TAXI222              |
+|       5 | Cottage Country            | 2022-06-01 | 2022-06-22 | Canada        | CAND123              |
+|       6 | Arrivaderci Roma           | 2022-07-05 | 2022-07-15 | Italy         | TAXI111              |
+|       7 | Shetland and Orkney        | 2022-09-09 | 2022-09-29 | UK            | TAXI111              |
+|       8 | Disney World and Sea World | 2022-06-10 | 2022-06-20 | USA           | VAN1111              |
+|       9 | Alpine                     | 2024-02-13 | 2024-02-28 | Germany       | VAN1111              |
+|      10 | Worst Tour                 | 2022-02-22 | 2022-03-01 | Canada        | TAXI111              |
++---------+----------------------------+------------+------------+---------------+----------------------+
+9 rows in set (0.00 sec)
+
+ERROR 1451 (23000) at line 39: Cannot delete or update a parent row: a foreign key constraint fails (`90_assign2db`.`tripBooking`, CONSTRAINT `tripBooking_ibfk_1` FOREIGN KEY (`trip_id`) REFERENCES `busTrip` (`trip_id`))
+--------------
+DELETE FROM busTrip
+WHERE trip_name = "Arrivaderci Roma"
+--------------
+
+--------------
+SELECT * FROM passenger
+--------------
+
++--------------+------------+-----------+
+| passenger_id | first_name | last_name |
++--------------+------------+-----------+
+|           11 | Homer      | Simpson   |
+|           22 | Marge      | Simpson   |
+|           33 | Bart       | Simpson   |
+|           34 | Lisa       | Simpson   |
+|           35 | Maggie     | Simpson   |
+|           44 | Ned        | Flanders  |
+|           45 | Todd       | Flanders  |
+|           66 | Heidi      | Klum      |
+|           77 | Michael    | Scott     |
+|           78 | Dwight     | Schrute   |
+|           79 | Pam        | Beesly    |
+|           80 | Creed      | Bratton   |
+|           90 | John       | Reed      |
++--------------+------------+-----------+
+13 rows in set (0.00 sec)
+
+--------------
+DELETE FROM passenger
+WHERE first_name = "Pam"
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+SELECT * FROM passenger
+--------------
+
++--------------+------------+-----------+
+| passenger_id | first_name | last_name |
++--------------+------------+-----------+
+|           11 | Homer      | Simpson   |
+|           22 | Marge      | Simpson   |
+|           33 | Bart       | Simpson   |
+|           34 | Lisa       | Simpson   |
+|           35 | Maggie     | Simpson   |
+|           44 | Ned        | Flanders  |
+|           45 | Todd       | Flanders  |
+|           66 | Heidi      | Klum      |
+|           77 | Michael    | Scott     |
+|           78 | Dwight     | Schrute   |
+|           80 | Creed      | Bratton   |
+|           90 | John       | Reed      |
++--------------+------------+-----------+
+12 rows in set (0.00 sec)
+
+--------------
+SELECT * FROM passenger_who_take_trip
+--------------
+
++------------+-----------+----------------------------+---------------+---------+
+| first_name | last_name | trip_name                  | visit_country | price   |
++------------+-----------+----------------------------+---------------+---------+
+| Homer      | Simpson   | Castles of Germany         | Germany       |  500.00 |
+| Marge      | Simpson   | Castles of Germany         | Germany       |  500.00 |
+| Bart       | Simpson   | Castles of Germany         | Germany       |  200.00 |
+| Lisa       | Simpson   | Castles of Germany         | Germany       |  200.00 |
+| Maggie     | Simpson   | Castles of Germany         | Germany       |  200.00 |
+| Heidi      | Klum      | Castles of Germany         | Germany       |  600.99 |
+| Dwight     | Schrute   | Castles of Germany         | Germany       |  550.00 |
+| Dwight     | Schrute   | Beaches Galore             | Bermuda       |  600.00 |
+| Creed      | Bratton   | Beaches Galore             | Bermuda       |  600.00 |
+| Homer      | Simpson   | Arrivaderci Roma           | Italy         |  600.00 |
+| Marge      | Simpson   | Arrivaderci Roma           | Italy         |  600.00 |
+| Bart       | Simpson   | Arrivaderci Roma           | Italy         |  100.00 |
+| Lisa       | Simpson   | Arrivaderci Roma           | Italy         |  100.00 |
+| Maggie     | Simpson   | Arrivaderci Roma           | Italy         |  100.00 |
+| Homer      | Simpson   | Shetland and Orkney        | UK            |  300.00 |
+| Ned        | Flanders  | Shetland and Orkney        | UK            |  400.00 |
+| Michael    | Scott     | Shetland and Orkney        | UK            |  500.00 |
+| Ned        | Flanders  | Disney World and Sea World | USA           |  400.00 |
+| Todd       | Flanders  | Disney World and Sea World | USA           |  200.00 |
+| Bart       | Simpson   | Disney World and Sea World | USA           |  300.00 |
+| Lisa       | Simpson   | Disney World and Sea World | USA           |  300.00 |
+| John       | Reed      | Worst Tour                 | Canada        | 1000.99 |
++------------+-----------+----------------------------+---------------+---------+
+22 rows in set (0.01 sec)
+
+--------------
+DELETE FROM passenger
+WHERE last_name = "Simpson"
+--------------
+
+Query OK, 5 rows affected (0.02 sec)
+
+--------------
+SELECT * FROM passenger_who_take_trip
+--------------
+
++------------+-----------+----------------------------+---------------+---------+
+| first_name | last_name | trip_name                  | visit_country | price   |
++------------+-----------+----------------------------+---------------+---------+
+| Ned        | Flanders  | Disney World and Sea World | USA           |  400.00 |
+| Ned        | Flanders  | Shetland and Orkney        | UK            |  400.00 |
+| Todd       | Flanders  | Disney World and Sea World | USA           |  200.00 |
+| Heidi      | Klum      | Castles of Germany         | Germany       |  600.99 |
+| Michael    | Scott     | Shetland and Orkney        | UK            |  500.00 |
+| Dwight     | Schrute   | Beaches Galore             | Bermuda       |  600.00 |
+| Dwight     | Schrute   | Castles of Germany         | Germany       |  550.00 |
+| Creed      | Bratton   | Beaches Galore             | Bermuda       |  600.00 |
+| John       | Reed      | Worst Tour                 | Canada        | 1000.99 |
++------------+-----------+----------------------------+---------------+---------+
+9 rows in set (0.00 sec)
+
+Bye

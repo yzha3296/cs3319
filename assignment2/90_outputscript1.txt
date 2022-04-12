@@ -1,0 +1,118 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SHOW DATABASES
+--------------
+
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| 90_assign2db       |
+| good               |
+| mysql              |
+| performance_schema |
+| vetoffice          |
++--------------------+
+6 rows in set (0.00 sec)
+
+--------------
+DROP DATABASE IF EXISTS 90_assign2db
+--------------
+
+Query OK, 8 rows affected (0.35 sec)
+
+--------------
+CREATE DATABASE 90_assign2db
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+SHOW TABLES
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+CREATE TABLE bus (
+    License_Plate_number CHAR(7) NOT NULL, 
+    capacity VARCHAR(3), 
+    PRIMARY KEY(License_Plate_number)
+)
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+CREATE TABLE busTrip (
+    trip_id INT NOT NULL, 
+    trip_name VARCHAR(50),
+    begin_date DATE,
+    end_date DATE, 
+    visit_country VARCHAR(30), 
+    License_Plate_number CHAR(7), 
+    PRIMARY KEY(trip_id),
+    FOREIGN KEY (License_Plate_number) REFERENCES bus(License_Plate_number)
+)
+--------------
+
+Query OK, 0 rows affected (0.07 sec)
+
+--------------
+CREATE TABLE passenger(
+    passenger_id INT NOT NULL, 
+    first_name VARCHAR(20), 
+    last_name VARCHAR(20), 
+    PRIMARY KEY(passenger_id)
+)
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+CREATE TABLE passport(
+    passport_num CHAR(4) NOT NULL,
+    citizenship VARCHAR(30),
+    exp_date DATE,
+    birth_date DATE,
+    passenger_id INT NOT NULL,
+    PRIMARY KEY(passport_num),
+    FOREIGN KEY(passenger_id) 
+        REFERENCES passenger(passenger_id)
+        ON DELETE CASCADE
+)
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+CREATE TABLE tripBooking(
+    passenger_id INT NOT NULL,
+    trip_id INT NOT NULL,
+    price DECIMAL(10,2),
+    FOREIGN KEY (trip_id)
+        REFERENCES busTrip(trip_id),
+    FOREIGN KEY (passenger_id) 
+        REFERENCES passenger(passenger_id)
+        ON DELETE CASCADE
+)
+--------------
+
+Query OK, 0 rows affected (0.08 sec)
+
+--------------
+SHOW TABLES
+--------------
+
++------------------------+
+| Tables_in_90_assign2db |
++------------------------+
+| bus                    |
+| busTrip                |
+| passenger              |
+| passport               |
+| tripBooking            |
++------------------------+
+5 rows in set (0.00 sec)
+
+Bye
